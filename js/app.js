@@ -1,132 +1,93 @@
 'use strict'
 
 let elBody = document.getElementById('myBody')
+let elStoreTable = document.getElementById('store-table')
+elBody.appendChild(elStoreTable)
 
 let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']
+let stores = []
 
-let firstAndPike = {
-  storeName: '1st and Pike',
-  minCust: 23,
-  maxCust: 65,
-  cookiesPerCust: 6.3,
-  cookiesSoldPerHour: function() {
-    let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
-    return Math.round(randomNumber * this.cookiesPerCust)
-  }
+//declare a new variable and assign the value of a constructor function which will return a new object
+let CookieStore = function(name, min, max, cookies) {
+  this.storeName = name
+  this.minCust = min
+  this.maxCust = max
+  this.cookiesPerCust = cookies
+  this.cookieArray = []
 }
 
-let SeaTacAirport = {
-  storeName: 'SeaTac Airport',
-  minCust: 3,
-  maxCust: 24,
-  cookiesPerCust: 1.2,
-  cookiesSoldPerHour: function() {
-    let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
-    return Math.round(randomNumber * this.cookiesPerCust)
-  }
+CookieStore.prototype.cookiesSoldPerHour = function(){
+  let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
+  return Math.round(randomNumber * this.cookiesPerCust)
 }
 
-let SeattleCenter = {
-  storeName: 'Seattle Center',
-  minCust: 11,
-  maxCust: 38,
-  cookiesPerCust: 3.7,
-  cookiesSoldPerHour: function() {
-    let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
-    return Math.round(randomNumber * this.cookiesPerCust)
-  }
-}
+//create a new instance of this function (WizardSchool object constructor)
+let firstAndPike = new CookieStore('First and Pike', 23, 65, 6.3)
+let SeaTacAirport = new CookieStore('SeaTac Airport', 3, 24, 1.2)
+let SeattleCenter = new CookieStore('Seattle Center', 11, 38, 3.7)
+let CapitolHill = new CookieStore('Capitol Hill', 20, 38, 2.3)
+let Alki = new CookieStore('Alki', 2, 16, 4.6)
 
-let CapitolHill = {
-  storeName: 'Capitol Hill',
-  minCust: 20,
-  maxCust: 38,
-  cookiesPerCust: 2.3,
-  cookiesSoldPerHour: function() {
-    let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
-    return Math.round(randomNumber * this.cookiesPerCust)
-  }
-}
+//adds new values to the end of the array
+stores.push(firstAndPike, SeaTacAirport, SeattleCenter, CapitolHill, Alki)
 
-let Alki = {
-  storeName: 'Alki',
-  minCust: 2,
-  maxCust: 16,
-  cookiesPerCust: 4.6,
-  cookiesSoldPerHour: function() {
-    let randomNumber = Math.ceil((Math.random() * (this.maxCust - this.minCust)) + this.minCust)
-    return Math.round(randomNumber * this.cookiesPerCust)
-  }
-}
-
-let elFirstAndPikeTitle = document.createElement('h2')
-elBody.appendChild(elFirstAndPikeTitle)
-elFirstAndPikeTitle.innerText = firstAndPike.storeName
-
-let elListFirstAndPike = document.createElement('ul')
-elBody.appendChild(elListFirstAndPike)
-
+let elHeader = document.createElement('tr')
+elStoreTable.appendChild(elHeader)
+let elTh = document.createElement('th')
+elHeader.appendChild(elTh)
 for(let i = 0; i < hours.length; i++) {
-  console.log(hours[i], 'Total number of cookies', firstAndPike.cookiesSoldPerHour())
-  let elListItem = document.createElement('li')
-  elListFirstAndPike.appendChild(elListItem)
-  elListItem.innerText = hours[i] + ': ' + firstAndPike.cookiesSoldPerHour()
-
+  let elTh = document.createElement('th')
+  elHeader.appendChild(elTh)
+  elTh.innerText = hours[i]
 }
 
-let elSeaTacAirportTitle = document.createElement('h2')
-elBody.appendChild(elSeaTacAirportTitle)
-elSeaTacAirportTitle.innerText = SeaTacAirport.storeName
-
-let elListSeaTac = document.createElement('ul')
-elBody.appendChild(elListSeaTac)
-
-for(let i = 0; i < hours.length; i++) {
-  console.log(hours[i], 'Total number of cookies', SeaTacAirport.cookiesSoldPerHour())
-  let elListItem = document.createElement('li')
-  elListSeaTac.appendChild(elListItem)
-  elListItem.innerText = hours[i] + ': ' + SeaTacAirport.cookiesSoldPerHour()
-
+let elTotalHead = document.createElement('th')
+elHeader.appendChild(elTotalHead)
+elTotalHead.innerText = 'Daily Location Total'
+//create a new row and append it to our table
+for(let j = 0; j < stores.length; j++) {
+  let elRow = document.createElement('tr')
+  elStoreTable.appendChild(elRow)
+  let elTh = document.createElement('th')
+  elRow.appendChild(elTh)
+  elTh.innerText = stores[j].storeName
+  let counter = 0
+  for(let i = 0; i < hours.length; i++){
+    let cookiesByLocationPerDay = stores[j].cookiesSoldPerHour()
+    let elTd = document.createElement('td')
+    elRow.appendChild(elTd)
+    elTd.innerText = cookiesByLocationPerDay
+    counter+= cookiesByLocationPerDay
+    stores[j].cookieArray.push(cookiesByLocationPerDay)
+  }
+  let elTotal = document.createElement('td')
+  elRow.appendChild(elTotal)
+  elTotal.innerText = counter
+  console.log(stores[j].cookieArray)
 }
-let elSeattleCenterTitle = document.createElement('h2')
-elBody.appendChild(elSeattleCenterTitle)
-elSeattleCenterTitle.innerText = SeattleCenter.storeName
-
-let elListSeattleCenter = document.createElement('ul')
-elBody.appendChild(elListSeattleCenter)
-
-for(let i = 0; i < hours.length; i++) {
-  console.log(hours[i], 'Total number of cookies', SeattleCenter.cookiesSoldPerHour())
-  let elListItem = document.createElement('li')
-  elListSeattleCenter.appendChild(elListItem)
-  elListItem.innerText = hours[i] + ': ' + SeattleCenter.cookiesSoldPerHour()
-
-}
-let elCapitolHillTitle = document.createElement('h2')
-elBody.appendChild(elCapitolHillTitle)
-elCapitolHillTitle.innerText = CapitolHill.storeName
-
-let elListCapitolHill = document.createElement('ul')
-elBody.appendChild(elListCapitolHill)
-
-for(let i = 0; i < hours.length; i++) {
-  console.log(hours[i], 'Total number of cookies', CapitolHill.cookiesSoldPerHour())
-  let elListItem = document.createElement('li')
-  elListCapitolHill.appendChild(elListItem)
-  elListItem.innerText = hours[i] + ': ' + CapitolHill.cookiesSoldPerHour()
-
-}
-let elAlkiTitle = document.createElement('h2')
-elBody.appendChild(elAlkiTitle)
-elAlkiTitle.innerText = Alki.storeName
-
-let elListAlki = document.createElement('ul')
-elBody.appendChild(elListAlki)
-
-for(let i = 0; i < hours.length; i++) {
-  console.log(hours[i], 'Total number of cookies', Alki.cookiesSoldPerHour())
-  let elListItem = document.createElement('li')
-  elListAlki.appendChild(elListItem)
-  elListItem.innerText = hours[i] + ': ' + Alki.cookiesSoldPerHour()
-
-}
+//Stretch goal is work in progress
+// let elRow = document.createElement('tr')
+// elStoreTable.appendChild(elRow)
+// let elFoot = document.createElement('th')
+// elRow.appendChild(elFoot)
+// elFoot.innerText = 'Total'
+// for(let j = 0; j < hours.length; j++) {
+//   let elRow = document.createElement('tr')
+//   elStoreTable.appendChild(elRow)
+//   let elTh = document.createElement('th')
+//   elRow.appendChild(elTh)
+//   elTh.innerText = stores[j].storeName
+//   let counter = 0
+//   for(let i = 0; i < stores.length; i++){
+//     let cookiesByLocationPerDay = stores[j].cookiesSoldPerHour()
+//     let elTd = document.createElement('td')
+//     elRow.appendChild(elTd)
+//     elTd.innerText = cookiesByLocationPerDay
+//     counter+= cookiesByLocationPerDay
+//     stores[j].cookieArray.push(cookiesByLocationPerDay)
+//   }
+//   let elTotal = document.createElement('td')
+//   elRow.appendChild(elTotal)
+//   elTotal.innerText = counter
+//   console.log(stores[j].cookieArray)
+// }
