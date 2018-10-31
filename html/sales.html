@@ -3,13 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Cookie Store Sales Projections</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/sales.css" />
 </head>
-<body id="myBody">
+<body id="my-body">
   <table id="store-table">
   </table>
+  <fieldset>
+    <form id='store-form'>
+      <label>Name of Store</label>
+      <input required name="nameOfStore" />
+      <label>Minimum # of Customers</label>
+      <input name="minCust" min="0" max="100" type="number"/>
+      <label>Maximum # of Customers</label>
+      <input name="maxCust" min="0" max="100" type="number"/>
+      <label>Average # of Cookies Sold Per Customer</label>
+      <input name="cookiesPerCust" min="0" max="100" type="number"/>
+      <button type="submit">Submit</button>
+    </form>
+  </fieldset>
 </body>
 <script src="../js/app.js"></script>
 </html>
