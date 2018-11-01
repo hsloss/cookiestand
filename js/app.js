@@ -108,5 +108,8 @@ elForm.addEventListener('submit', function(event) {
   let newStore = new CookieStore(elNameOfStore.value, elMinCust.value, elMaxCust.value, elCookiesPerCust.value)
   stores.push(newStore)
   //invoke our rendernewschool method on our new school to generate a new row on our table.
+  let numberOfRows = document.getElementById('store-table').rows.length
+  document.getElementById('store-table').deleteRow(numberOfRows-1)
   newStore.dailyLocationTotal()
+  dailyHourTotal()
 })
