@@ -1,12 +1,7 @@
-td, th {
-  border: 2px solid whitesmoke;
-}
-
 body {
   color: rgb(135, 135, 199);
   width: 100%;
   margin: 0px;
-  background-color:rgb(185, 230, 245);
 }
 
 nav {

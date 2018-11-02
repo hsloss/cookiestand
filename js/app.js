@@ -72,30 +72,32 @@ CookieStore.prototype.dailyLocationTotal = function() {
 for(let j = 0; j < stores.length; j++) {
   stores[j].dailyLocationTotal()
 }
-
-let dailyHourTotal = function() {
-  let elRow = document.createElement('tr')
-  elStoreTable.appendChild(elRow)
-  let elFoot = document.createElement('th')
-  elRow.appendChild(elFoot)
-  elFoot.innerText = 'Total Per Hour'
-  let TotalCounter = 0
-  for(let j = 0; j < hours.length; j++) {
-    let counter = 0
-    for(let i = 0; i < stores.length; i++){
-      TotalCounter+= stores[i].cookiesArray[j]
-      counter+= stores[i].cookiesArray[j]
+let renderFooter = function(){
+  let dailyHourTotal = function() {
+    let elRow = document.createElement('tr')
+    elStoreTable.appendChild(elRow)
+    let elFoot = document.createElement('th')
+    elRow.appendChild(elFoot)
+    elFoot.innerText = 'Total Per Hour'
+    let TotalCounter = 0
+    for(let j = 0; j < hours.length; j++) {
+      let counter = 0
+      for(let i = 0; i < stores.length; i++){
+        TotalCounter+= stores[i].cookiesArray[j]
+        counter+= stores[i].cookiesArray[j]
+      }
+      let elTd2 = document.createElement('td')
+      elRow.appendChild(elTd2)
+      elTd2.innerText = counter
     }
-    let elTd2 = document.createElement('td')
-    elRow.appendChild(elTd2)
-    elTd2.innerText = counter
+    let elTotal = document.createElement('td')
+    elRow.appendChild(elTotal)
+    elTotal.innerText = TotalCounter
   }
-  let elTotal = document.createElement('td')
-  elRow.appendChild(elTotal)
-  elTotal.innerText = TotalCounter
+  dailyHourTotal()
 }
 
-dailyHourTotal()
+renderFooter()
 
 let elNameOfStore = elForm.nameOfStore
 let elMinCust = elForm.minCust
@@ -106,10 +108,20 @@ let elCookiesPerCust = elForm.cookiesPerCust
 elForm.addEventListener('submit', function(event) {
   event.preventDefault()
   let newStore = new CookieStore(elNameOfStore.value, elMinCust.value, elMaxCust.value, elCookiesPerCust.value)
+  // //if newstore.elNameOfStore.value exists, delete row with new.store.elNameOfStore.value and reprint the input in new row//
+  // let elStoreTable = document.getElementById('store-table')
+  // let elForm = document.getElementById('store-form')
+  // if (elStoreTable.elNameOfStore.value.contains(elForm.elNameOfStore.value)){
+  //   let rows = document.getElementById('store-table')rows.id
+  //   document.getElementById('store-table').deleteRow(rows.elTable.elNameOfStore)
+  //   stores.push(newStore)
+  //   newStore.dailyLocationTotal()
+  //   dailyHourTotal()
+  // } else
   stores.push(newStore)
   //invoke our rendernewschool method on our new school to generate a new row on our table.
   let numberOfRows = document.getElementById('store-table').rows.length
   document.getElementById('store-table').deleteRow(numberOfRows-1)
   newStore.dailyLocationTotal()
-  dailyHourTotal()
+  renderFooter()
 })
