@@ -1,0 +1,73 @@
+td, th {
+  border: 2px solid whitesmoke;
+}
+
+body {
+  color: rgb(135, 135, 199);
+  width: 100%;
+  margin: 0px;
+  background-color:rgb(185, 230, 245);
+}
+
+nav {
+  width: 100%;
+  background-color:rgb(159, 217, 236);
+  text-align: center;
+}
+
+#logo {
+  width: 250px;
+  height: 50px;
+}
+
+#article {
+  width: 505px;
+  background-color:rgb(130, 184, 202);
+  height: 250px;
+  float: left;
+  color:rgb(194, 216, 223);
+}
+
+.nav-link {
+  display: inline-block;
+  text-decoration: none;
+  color:whitesmoke;
+  align-content: center;
+}
+
+aside {
+  width: 20%;
+  margin: 0px;
+  height: 500px;
+  background-color:rgb(194, 216, 223);
+  text-align: center;
+  float: left;
+}
+
+main {
+  width: 80%;
+  background-color:rgb(185, 230, 245);
+  float: left;
+  height: 250px;
+  text-align: center;
+}
+
+article {
+  width: 40%;
+  background-color:rgb(185, 230, 245);
+  height: 250px;
+  float: left;
+}
+
+footer {
+  width: 100%;
+  height: 50px;
+  background-color:rgb(2, 99, 131);
+  float: left;
+  text-align: center;
+  color:  rgb(195, 195, 209)
+}
+
+#info {
+  text-align: center;
+}
